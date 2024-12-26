@@ -243,10 +243,6 @@ define(function (require) {
         input.addEventListener("input", function () {
             let scale = (input.value || 50) / 50;
             kfEditor.requestService("render.set.canvas.zoom", scale);
-            // var svgElements = document.querySelectorAll('.kf-editor-canvas-container svg');
-            // svgElements.forEach(function (svg) {
-            //     svg.setAttribute('transform', `scale(${scale})`)
-            // });
         });
         // 使用颜色选择器
         createColorPicker(container, kfEditor);
@@ -300,6 +296,13 @@ define(function (require) {
                 );
                 svgElement.forEach(function (svg) {
                     svg.setAttribute("fill", color);
+                });
+                var pathElement = document.querySelectorAll('.kf-editor-canvas-container path');
+                pathElement.forEach(function (path) {
+                    var fillColor = path.getAttribute('fill');
+                    if (fillColor !== 'transparent' && fillColor !== 'none') {
+                        path.setAttribute('fill', color)
+                    }
                 });
                 /* var textElements = document.querySelectorAll('.kf-editor-canvas-container svg text');
                 let range = kfEditor.services['syntax.update.selection'].provider.record.cursor
