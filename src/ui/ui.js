@@ -276,14 +276,25 @@ define( function ( require ) {
             colorBlock.style.cursor = 'pointer';
             colorBlock.style.border = '1px solid #ccc';
             colorBlock.addEventListener('click', () => {
-                console.log(kfEditor)
-                console.log(`选择了颜色: ${color}`);
                 button.style.background = color; // 改变按钮颜色
                 dropdown.style.display = 'none'; // 收起下拉框
-                var svgElements = document.querySelectorAll('.kf-editor-canvas-container svg');
-                svgElements.forEach(function (svg) {
-                    svg.setAttribute('fill', color)
-                });
+                var textElements = document.querySelectorAll('.kf-editor-canvas-container svg text');
+                let range = kfEditor.services['syntax.update.selection'].provider.record.cursor
+                let startOffset = range.startOffset
+                let endOffset = range.endOffset
+                if (!(endOffset - startOffset)) {
+                    var svgElement = document.querySelectorAll('.kf-editor-canvas-container svg');
+                    svgElement.forEach(function (svg) {
+                        svg.setAttribute('fill', color)
+                    });
+                } else {
+                    textElements.forEach(function (text, index) {
+                        if (index >= startOffset && index < endOffset) {
+                            text.setAttribute('fill', color)
+                        }
+                    })
+                }
+                
             });
             dropdown.appendChild(colorBlock);
         });
