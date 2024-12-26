@@ -31,7 +31,16 @@
     width: 100%;
     height: 100%;
 }
-
+.kf-editor-canvas-option{
+    position: absolute;
+    top: 106px;
+    left: 6px;
+    z-index: 10;
+    width: 200px;
+    height: 32px;
+    background-color: transparent;
+    overflow: hidden;
+}
 .kf-editor-input-box {
     position: fixed;
     top: 0;

@@ -15,10 +15,6 @@
         "javascript",
         "library"
     ],
-    "scripts": {
-        "start": "parcel index.html",
-        "build": "parcel build index.html"
-    },
     "licenses": [
         {
             "type": "MIT",

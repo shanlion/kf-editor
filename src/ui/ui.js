@@ -45,11 +45,13 @@ define( function ( require ) {
                 this.toolbarContainer = createToolbarContainer( currentDocument );
                 this.editArea = createEditArea( currentDocument );
                 this.canvasContainer = createCanvasContainer( currentDocument );
+                this.canvasOptions = createCanvasOptions( currentDocument, kfEditor );
                 this.scrollbarContainer = createScrollbarContainer( currentDocument );
 
                 this.toolbarWrap.appendChild( this.toolbarContainer );
                 this.container.appendChild( this.toolbarWrap );
                 this.editArea.appendChild( this.canvasContainer );
+                this.container.appendChild( this.canvasOptions );
                 this.container.appendChild( this.editArea );
                 this.container.appendChild( this.scrollbarContainer );
 
@@ -225,6 +227,24 @@ define( function ( require ) {
         container.className = "kf-editor-edit-area";
         container.style.width = "80%";
         container.style.height = "800px";
+        return container;
+    }
+    function createCanvasOptions ( doc, kfEditor ) {
+        var container = doc.createElement( "div" );
+        container.className = "kf-editor-canvas-option";
+        // 创建一个 input 输入框
+        var input = document.createElement("input");
+        input.type = "text"; // 设置为文本输入框
+        input.placeholder = "请输入字体大小"; // 占位符
+        container.appendChild(input);
+        input.addEventListener("input", function () {
+            let scale = (input.value || 50) / 50
+            var svgElements = document.querySelectorAll('.kf-editor-canvas-container svg');
+            svgElements.forEach(function (svg) {
+                svg.setAttribute('transform', `scale(${scale})`)
+            });
+        });
+
         return container;
     }
 
