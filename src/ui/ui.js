@@ -239,10 +239,11 @@ define( function ( require ) {
         container.appendChild(input);
         input.addEventListener("input", function () {
             let scale = (input.value || 50) / 50
-            var svgElements = document.querySelectorAll('.kf-editor-canvas-container svg');
-            svgElements.forEach(function (svg) {
-                svg.setAttribute('transform', `scale(${scale})`)
-            });
+            kfEditor.requestService( "render.set.canvas.zoom", scale);
+            // var svgElements = document.querySelectorAll('.kf-editor-canvas-container svg');
+            // svgElements.forEach(function (svg) {
+            //     svg.setAttribute('transform', `scale(${scale})`)
+            // });
         });
         // 使用颜色选择器
         createColorPicker(container, kfEditor);
