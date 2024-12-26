@@ -568,6 +568,10 @@ svg[class='red'] path[fill='black'] {
     fill: red !important;
 }
 
+/* svg[class='red'] path {
+
+    fill: red !important;
+} */
 
 svg[class='BB'] text {
     font-family: "KF AMS BB" !important;

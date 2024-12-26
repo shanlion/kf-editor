@@ -75,18 +75,20 @@ define(function (require) {
                 );
 
                 // TODO 禁用缩放, 留待后面再重新开启
-                // if ( false ) {
-                if (this.options.zoom) {
-                    this.components.scrollZoom = new ScrollZoom(
-                        this,
-                        this.kfEditor,
-                        this.canvasContainer,
-                        {
-                            max: this.options.maxzoom,
-                            min: this.options.minzoom
-                        }
-                    );
+                if (false) {
+                    if (this.options.zoom) {
+                        this.components.scrollZoom = new ScrollZoom(
+                            this,
+                            this.kfEditor,
+                            this.canvasContainer,
+                            {
+                                max: this.options.maxzoom,
+                                min: this.options.minzoom
+                            }
+                        );
+                    }
                 }
+
                 this.components.scrollbar = new Scrollbar(this, this.kfEditor);
             },
 
@@ -292,10 +294,12 @@ define(function (require) {
             colorBlock.style.border = "1px solid #ccc";
             colorBlock.addEventListener("click", () => {
                 button.style.background = color; // 改变按钮颜色
-                dropdown.style.display = 'none'; // 收起下拉框
-                var svgElement = document.querySelectorAll('.kf-editor-canvas-container svg');
+                dropdown.style.display = "none"; // 收起下拉框
+                var svgElement = document.querySelectorAll(
+                    ".kf-editor-canvas-container svg"
+                );
                 svgElement.forEach(function (svg) {
-                    svg.setAttribute('fill', color)
+                    svg.setAttribute("fill", color);
                 });
                 /* var textElements = document.querySelectorAll('.kf-editor-canvas-container svg text');
                 let range = kfEditor.services['syntax.update.selection'].provider.record.cursor
@@ -315,7 +319,6 @@ define(function (require) {
                         }
                     })
                 } */
-                
             });
             dropdown.appendChild(colorBlock);
         });

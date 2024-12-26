@@ -15,6 +15,9 @@
         "javascript",
         "library"
     ],
+    "scripts": {
+        "dev": "gulp"
+    },
     "licenses": [
         {
             "type": "MIT",
