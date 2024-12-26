@@ -240,15 +240,175 @@ define(function (require) {
         container.appendChild(input);
         input.addEventListener("input", function () {
             let scale = (input.value || 50) / 50;
-            var svgElements = document.querySelectorAll(
-                ".kf-editor-canvas-container svg"
-            );
-            svgElements.forEach(function (svg) {
-                svg.setAttribute("transform", `scale(${scale})`);
+            kfEditor.requestService("render.set.canvas.zoom", scale);
+            // var svgElements = document.querySelectorAll('.kf-editor-canvas-container svg');
+            // svgElements.forEach(function (svg) {
+            //     svg.setAttribute('transform', `scale(${scale})`)
+            // });
+        });
+        // 使用颜色选择器
+        createColorPicker(container, kfEditor);
+        createFrontPicker(container);
+        return container;
+    }
+    // 创建颜色选择器
+    function createColorPicker(parentElement, kfEditor) {
+        const colors = [
+            "#ff0000",
+            "#00ff00",
+            "#0000ff",
+            "#ffff00",
+            "#ff00ff",
+            "#00ffff",
+            "#000000",
+            "#ffffff",
+            "#808080",
+            "#800000",
+            "#808000",
+            "#008000",
+            "#800080",
+            "#008080",
+            "#000080",
+            "#ffa500"
+        ];
+
+        // 创建按钮
+        const button = document.createElement("button");
+        button.textContent = "选择颜色";
+        button.style.position = "relative";
+
+        // 创建下拉容器
+        const dropdown = document.createElement("div");
+        dropdown.className = "kf-editor-dropdown";
+        dropdown.style.display = "none";
+
+        // 创建颜色方块
+        colors.forEach((color) => {
+            const colorBlock = document.createElement("div");
+            colorBlock.style.background = color;
+            colorBlock.style.width = "30px";
+            colorBlock.style.height = "30px";
+            colorBlock.style.cursor = "pointer";
+            colorBlock.style.border = "1px solid #ccc";
+            colorBlock.addEventListener("click", () => {
+                button.style.background = color; // 改变按钮颜色
+                dropdown.style.display = "none"; // 收起下拉框
+                var textElements = document.querySelectorAll(
+                    ".kf-editor-canvas-container svg text"
+                );
+                let range =
+                    kfEditor.services["syntax.update.selection"].provider.record
+                        .cursor;
+                let startOffset = range.startOffset;
+                let endOffset = range.endOffset;
+                if (!(endOffset - startOffset)) {
+                    var svgElement = document.querySelectorAll(
+                        ".kf-editor-canvas-container svg"
+                    );
+                    svgElement.forEach(function (svg) {
+                        svg.setAttribute("fill", color);
+                    });
+                } else {
+                    textElements.forEach(function (text, index) {
+                        if (index >= startOffset && index < endOffset) {
+                            text.setAttribute("fill", color);
+                        }
+                    });
+                }
             });
+            dropdown.appendChild(colorBlock);
         });
 
-        return container;
+        // 点击按钮切换下拉框显示
+        button.addEventListener("click", () => {
+            dropdown.style.display =
+                dropdown.style.display === "none" ? "grid" : "none";
+        });
+
+        // 点击其他地方关闭下拉框
+        document.addEventListener("click", (e) => {
+            if (!button.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
+
+        // 将按钮和下拉框添加到父元素
+        parentElement.appendChild(button);
+        button.appendChild(dropdown);
+    }
+    // 创建字体选择器
+    function createFrontPicker(parentElement) {
+        const fonts = [
+            {
+                name: "默认",
+                value: "KF AMS MAIN"
+            },
+            {
+                name: "花体",
+                value: "KF AMS FRAK"
+            },
+            {
+                name: "手写体",
+                value: "KF AMS CAL"
+            },
+            // {
+            //     name: "双线",
+            //     value: "KF AMS BB"
+            // },
+            {
+                name: "罗马体",
+                value: "KF AMS ROMAN"
+            }
+        ];
+
+        // 创建按钮
+        const button = document.createElement("button");
+        button.style.position = "relative";
+        const buttonLabel = document.createElement("span");
+        buttonLabel.textContent = "选择字体";
+        button.appendChild(buttonLabel);
+
+        // 创建下拉容器
+        const fontDropdown = document.createElement("div");
+        fontDropdown.className = "kf-editor-font-dropdown";
+        fontDropdown.style.display = "none";
+
+        // 创建颜色方块
+        fonts.forEach((font) => {
+            const block = document.createElement("div");
+            block.className = "font-block";
+            block.textContent = font.name;
+            block.addEventListener("click", () => {
+                console.log(button.textContent);
+                buttonLabel.textContent = font.name; // 改变按钮颜色
+                fontDropdown.style.display = "none"; // 收起下拉框
+                var textElements = document.querySelectorAll(
+                    ".kf-editor-canvas-container svg text"
+                );
+                textElements.forEach(function (svg) {
+                    svg.setAttribute("font-family", font.value);
+                });
+            });
+            fontDropdown.appendChild(block);
+        });
+
+        // 点击按钮切换下拉框显示
+        button.addEventListener("click", () => {
+            console.log(fontDropdown);
+            fontDropdown.style.display =
+                fontDropdown.style.display === "none" ? "block" : "none";
+        });
+
+        // 点击其他地方关闭下拉框
+        document.addEventListener("click", (e) => {
+            if (!button.contains(e.target)) {
+                fontDropdown.style.display = "none";
+            }
+        });
+
+        // 将按钮和下拉框添加到父元素
+        parentElement.appendChild(button);
+        button.appendChild(fontDropdown);
     }
 
     function createCanvasContainer(doc) {
