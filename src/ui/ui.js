@@ -279,7 +279,11 @@ define( function ( require ) {
             colorBlock.addEventListener('click', () => {
                 button.style.background = color; // 改变按钮颜色
                 dropdown.style.display = 'none'; // 收起下拉框
-                var textElements = document.querySelectorAll('.kf-editor-canvas-container svg text');
+                var svgElement = document.querySelectorAll('.kf-editor-canvas-container svg');
+                svgElement.forEach(function (svg) {
+                    svg.setAttribute('fill', color)
+                });
+                /* var textElements = document.querySelectorAll('.kf-editor-canvas-container svg text');
                 let range = kfEditor.services['syntax.update.selection'].provider.record.cursor
                 let startOffset = range.startOffset
                 let endOffset = range.endOffset
@@ -294,7 +298,7 @@ define( function ( require ) {
                             text.setAttribute('fill', color)
                         }
                     })
-                }
+                } */
                 
             });
             dropdown.appendChild(colorBlock);
