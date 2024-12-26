@@ -534,3 +534,56 @@
     -webkit-border-image: url(../images/scrollbar/custom/bar.png) 8;
     border-width: 10px;
 }
+
+
+
+svg[class='MAIN'] text {
+    font-family: "KF AMS MAIN" !important;
+}
+
+svg[class='BB'] text {
+    font-family: "KF AMS BB" !important;
+}
+
+svg[class='CAL'] text {
+    font-family: "KF AMS CAL" !important;
+}
+
+svg[class='FRAK'] text {
+    font-family: "KF AMS FRAK" !important;
+}
+
+
+svg[class='ROMAN'] text {
+    font-family: "KF AMS ROMAN" !important;
+}
+
+
+svg[class='red'] text {
+    font-family: "KF AMS MAIN" !important;
+    fill: red !important;
+}
+svg[class='red'] path[fill='black'] {
+
+    fill: red !important;
+}
+
+
+svg[class='BB'] text {
+    font-family: "KF AMS BB" !important;
+}
+
+svg[class='CAL'] text {
+    font-family: "KF AMS CAL" !important;
+}
+
+svg[class='FRAK'] text {
+    font-family: "KF AMS FRAK" !important;
+}
+
+
+svg[class='ROMAN'] text {
+    font-family: "KF AMS ROMAN" !important;
+}
+
+
