@@ -244,9 +244,66 @@ define( function ( require ) {
                 svg.setAttribute('transform', `scale(${scale})`)
             });
         });
-
+        // 使用颜色选择器
+        createColorPicker(container, kfEditor);
         return container;
     }
+    // 创建颜色选择器
+    function createColorPicker(parentElement, kfEditor) {
+        const colors = [
+            '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff',
+            '#000000', '#ffffff', '#808080', '#800000', '#808000', '#008000',
+            '#800080', '#008080', '#000080', '#ffa500'
+        ];
+
+        // 创建按钮
+        const button = document.createElement('button');
+        button.textContent = '选择颜色';
+        button.style.position = 'relative';
+
+        // 创建下拉容器
+        const dropdown = document.createElement('div');
+        dropdown.className = "kf-editor-dropdown";
+        dropdown.style.display = 'none';
+
+        // 创建颜色方块
+        colors.forEach((color) => {
+            const colorBlock = document.createElement('div');
+            colorBlock.style.background = color;
+            colorBlock.style.width = '30px';
+            colorBlock.style.height = '30px';
+            colorBlock.style.cursor = 'pointer';
+            colorBlock.style.border = '1px solid #ccc';
+            colorBlock.addEventListener('click', () => {
+                console.log(kfEditor)
+                console.log(`选择了颜色: ${color}`);
+                button.style.background = color; // 改变按钮颜色
+                dropdown.style.display = 'none'; // 收起下拉框
+                var svgElements = document.querySelectorAll('.kf-editor-canvas-container svg');
+                svgElements.forEach(function (svg) {
+                    svg.setAttribute('fill', color)
+                });
+            });
+            dropdown.appendChild(colorBlock);
+        });
+
+        // 点击按钮切换下拉框显示
+        button.addEventListener('click', () => {
+            dropdown.style.display = dropdown.style.display === 'none' ? 'grid' : 'none';
+        });
+
+        // 点击其他地方关闭下拉框
+        document.addEventListener('click', (e) => {
+            if (!button.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // 将按钮和下拉框添加到父元素
+        parentElement.appendChild(button);
+        button.appendChild(dropdown);
+    }
+
 
     function createCanvasContainer ( doc ) {
         var container = doc.createElement( "div" );
