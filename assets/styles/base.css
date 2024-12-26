@@ -38,7 +38,7 @@
     left: 6px;
     z-index: 10;
     width: 200px;
-    height: 48px;
+    height: 100px;
     background-color: transparent;
     /* overflow: hidden; */
 }
@@ -55,6 +55,20 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
 
+}
+.kf-editor-font-dropdown{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 150px;
+}
+.font-block{
+    line-height: 32px;
 }
 .kf-editor-input-box {
     position: fixed;
